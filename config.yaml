@@ -1,0 +1,178 @@
+# Code Quality Neural Network - Configuration File
+
+# Data Collection Settings
+data_collection:
+  # Target number of functions to collect
+  target_buggy: 5000
+  target_clean: 5000
+
+  # Repository filtering
+  min_stars_buggy: 100      # Minimum stars for repos with bug fixes
+  min_stars_clean: 1000     # Higher quality threshold for clean code
+
+  # Bug fix commit search queries
+  bug_keywords:
+    - "fix bug"
+    - "bugfix"
+    - "fixed issue"
+    - "resolved bug"
+    - "bug fix"
+
+  # Clean code source repositories (popular, well-tested libraries)
+  clean_repos:
+    - "psf/requests"
+    - "pallets/flask"
+    - "pandas-dev/pandas"
+    - "numpy/numpy"
+    - "django/django"
+    - "scikit-learn/scikit-learn"
+    - "torvalds/linux"
+    - "python/cpython"
+
+  # Function filtering
+  min_lines: 3              # Minimum lines of code
+  max_lines: 150            # Maximum lines of code
+  min_tokens: 10            # Minimum token count
+
+  # API and performance
+  max_workers: 10           # Concurrent async workers
+  checkpoint_interval: 500  # Save checkpoint every N functions
+  request_timeout: 30       # Seconds
+  max_retries: 3            # Network request retries
+
+  # Rate limiting (GitHub API: 5000 requests/hour authenticated)
+  rate_limit_threshold: 100  # Sleep when remaining requests < this
+  rate_limit_buffer: 10      # Extra seconds to add after reset
+
+# Preprocessing Settings
+preprocessing:
+  # Feature dimensions
+  num_code_metrics: 15      # Number of code metric features
+  num_ast_patterns: 20      # Number of AST pattern features
+  num_token_features: 100   # Token embedding dimension
+  total_features: 135       # Total feature dimension
+
+  # Token embedding
+  vocab_size: 5000          # Vocabulary size for tokenizer
+  max_length: 200           # Maximum sequence length (pad/truncate)
+  use_tfidf: true          # Use TF-IDF weighting
+
+  # Normalization
+  feature_scaling: "standard"  # Options: standard, minmax, robust
+
+  # Feature selection (optional)
+  remove_low_variance: false
+  variance_threshold: 0.01
+
+# Model Architecture
+model:
+  # Model type: "feature_only" or "hybrid"
+  model_type: "hybrid"
+
+  # Network structure
+  input_dim: 135
+  hidden_layers: [256, 128, 64]
+  dropout_rates: [0.3, 0.3, 0.2]
+  use_batch_norm: true
+
+  # Hybrid model settings (LSTM + features)
+  use_lstm: true              # Use LSTM for token sequences
+  embedding_dim: 128          # Token embedding dimension
+  lstm_hidden: 64             # LSTM hidden size
+  num_features: 32            # Number of numerical features
+
+  # Activation functions
+  hidden_activation: "relu"
+  output_activation: "sigmoid"
+
+# Training Settings
+training:
+  # Data splits
+  train_split: 0.70
+  val_split: 0.15
+  test_split: 0.15
+
+  # Random seed for reproducibility
+  random_seed: 42
+
+  # Hyperparameters
+  batch_size: 64
+  learning_rate: 0.001
+  epochs: 50
+
+  # Optimization
+  optimizer: "adam"
+  weight_decay: 0.0001      # L2 regularization
+
+  # Learning rate scheduling
+  use_scheduler: true
+  scheduler_type: "plateau"  # Options: plateau, step, exponential
+  scheduler_patience: 3
+  scheduler_factor: 0.5
+
+  # Early stopping
+  early_stopping: true
+  early_stopping_patience: 5
+  early_stopping_min_delta: 0.0001
+
+  # Checkpointing
+  save_best_only: true
+  checkpoint_metric: "val_loss"  # Options: val_loss, val_f1, val_accuracy
+
+  # Class imbalance handling
+  use_weighted_loss: false   # Enable if class imbalance detected
+
+  # GPU settings
+  use_gpu: true              # Use GPU if available
+  device: "cuda"             # Options: cuda, cpu, mps (for Mac)
+
+# Evaluation Settings
+evaluation:
+  # Metrics to compute
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+    - "confusion_matrix"
+
+  # Classification threshold
+  threshold: 0.5
+
+  # Visualization
+  plot_roc_curve: true
+  plot_precision_recall: true
+  plot_confusion_matrix: true
+  plot_feature_importance: true
+
+  # Error analysis
+  num_error_examples: 10    # Number of misclassified examples to show
+
+# Logging Settings
+logging:
+  level: "INFO"              # Options: DEBUG, INFO, WARNING, ERROR
+  log_file: "training.log"
+  console_output: true
+
+  # Experiment tracking
+  log_metrics_interval: 10   # Log every N batches
+  save_model_summary: true
+
+# Paths
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  models: "models"
+  checkpoints: "models/checkpoints"
+  notebooks: "notebooks"
+  logs: "logs"
+
+# Demo Settings
+demo:
+  model_path: "models/final_model.pth"
+  extractor_path: "data/processed/feature_extractor.pkl"
+
+  # Example functions for demo
+  show_examples: true
+  interactive_mode: true

@@ -1,0 +1,34 @@
+# Core ML and Deep Learning
+torch>=2.0.0
+numpy>=1.23.0
+scikit-learn>=1.2.0
+
+# Data Handling
+pandas>=1.5.0
+
+# GitHub API
+PyGithub>=1.59.0
+aiohttp>=3.8.0
+
+# Utilities
+tqdm>=4.65.0
+pyyaml>=6.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Jupyter Notebooks
+jupyter>=1.0.0
+ipykernel>=6.20.0
+
+# Testing
+pytest>=7.3.0
+
+# Environment Variables
+python-dotenv>=1.0.0
+
+# API Server
+fastapi>=0.100.0
+uvicorn[standard]>=0.22.0
+pydantic>=2.0.0

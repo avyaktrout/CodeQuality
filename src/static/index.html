@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Prediction - Code Quality Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bug Prediction</h1>
+            <p class="subtitle">AI-powered code quality analyzer for Python</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <label for="code-input">Enter Python Code:</label>
+                <textarea id="code-input" placeholder="def example_function():
+    # Paste your Python function here
+    pass"></textarea>
+                <div class="button-row">
+                    <button id="analyze-btn" onclick="analyzeCode()">
+                        Analyze Code
+                    </button>
+                    <button id="clear-btn" onclick="clearCode()" class="secondary">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <div id="result-section" class="result-section hidden">
+                <h2>Analysis Result</h2>
+                <div id="result-content"></div>
+            </div>
+
+            <div class="examples-section">
+                <h2>Example Code Snippets</h2>
+                <p>Click an example to load it into the editor:</p>
+                <div id="examples-container" class="examples-grid"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>
+                Built with PyTorch &amp; FastAPI |
+                <a href="/docs">API Documentation</a> |
+                <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

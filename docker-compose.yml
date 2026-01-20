@@ -1,0 +1,29 @@
+# Bug Prediction API - Docker Compose
+# Usage: docker-compose up --build
+
+version: "3.8"
+
+services:
+  api:
+    build: .
+    container_name: bug-prediction-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount models directory (optional - for using pre-trained models)
+      - ./models:/app/models:ro
+      # Mount data directory (optional - for access to processed data)
+      - ./data/processed:/app/data/processed:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+# Optional: Add a volume for persistent model storage
+volumes:
+  model-data:
