@@ -7,6 +7,10 @@
 
 A machine learning system that predicts whether Python code contains bugs using neural networks. Features data collection from GitHub, AST-based feature extraction, hybrid neural network architecture, and REST API deployment.
 
+## Demo
+
+![Bug Prediction Demo](docs/demo.png)
+
 ## Results
 
 | Metric | Score |
